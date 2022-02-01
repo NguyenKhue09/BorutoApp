@@ -5,7 +5,7 @@ import com.khue.borutoapp.data.repository.Repository
 import com.khue.borutoapp.domain.model.Hero
 import kotlinx.coroutines.flow.Flow
 
-class GetAllHeroes(
+class GetAllHeroesUseCase(
     private val repository: Repository
 ) {
     operator fun invoke(): Flow<PagingData<Hero>> {

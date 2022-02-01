@@ -1,4 +1,11 @@
 package com.khue.borutoapp.domain.use_cases.save_onboarding
 
-class SaveOnBoardingUseCase {
+import com.khue.borutoapp.data.repository.Repository
+
+class SaveOnBoardingUseCase(
+    private val repository: Repository
+) {
+    suspend operator fun invoke(completed: Boolean) {
+        repository.saveOnBoardingState(completed = completed)
+    }
 }

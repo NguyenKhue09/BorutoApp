@@ -1,3 +1,27 @@
 package com.khue.borutoapp.domain.model
 
-sealed class OnBoardingPage
+import androidx.annotation.DrawableRes
+import com.khue.borutoapp.R
+
+sealed class OnBoardingPage(
+    @DrawableRes
+    val image: Int,
+    val title: String,
+    val description: String
+) {
+    object First: OnBoardingPage(
+        image = R.drawable.greetings,
+        title = "Greetings",
+        description = "Are you a Boruto fan? Because if you are then we have a great news for you!"
+    )
+    object Second: OnBoardingPage(
+        image = R.drawable.explore,
+        title = "Explore",
+        description = "Find your favorites heroes and learn some of the things that you didn't know about."
+    )
+    object Third: OnBoardingPage(
+        image = R.drawable.power,
+        title = "Power",
+        description = "Check out your hero's and see how much are they strong comparing to others"
+    )
+}
