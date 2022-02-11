@@ -10,6 +10,7 @@ import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 @ExperimentalCoroutinesApi
 class SearchHeroesSourceTest {
@@ -130,5 +131,61 @@ class SearchHeroesSourceTest {
                     )
                 )
             )
+        }
+
+    @Test
+    fun `Search api with existing hero name, expect multiple hero result, assert LoadResult_Page`() =
+        runBlockingTest {
+            val heroesSource = SearchHeroesSource(borutoApi = borutoApi, query = "Sa")
+            assertEquals<LoadResult<Int, Hero>>(
+                expected = LoadResult.Page(
+                    data = listOf(heroes.first(), heroes[2]),
+                    prevKey = null,
+                    nextKey = null
+                ),
+                actual = heroesSource.load(
+                    LoadParams.Refresh(
+                        key = null,
+                        loadSize = 3,
+                        placeholdersEnabled = false
+                    )
+                )
+            )
+        }
+
+    @Test
+    fun `Search api with empty hero name, assert empty heroes list and LoadResult_Page`() =
+        runBlockingTest {
+            val heroesSource = SearchHeroesSource(borutoApi = borutoApi, query = "")
+            val loadResult = heroesSource.load(
+                LoadParams.Refresh(
+                    key = null,
+                    loadSize = 3,
+                    placeholdersEnabled = false
+                )
+            )
+
+            val result = borutoApi.searchHeroes("").heroes
+
+            assertTrue { result.isEmpty() }
+            assertTrue { loadResult is LoadResult.Page }
+        }
+
+    @Test
+    fun `Search api with non_existing hero name, assert empty heroes list and LoadResult_Page`() =
+        runBlockingTest {
+            val heroesSource = SearchHeroesSource(borutoApi = borutoApi, query = "khue")
+            val loadResult = heroesSource.load(
+                LoadParams.Refresh(
+                    key = null,
+                    loadSize = 3,
+                    placeholdersEnabled = false
+                )
+            )
+
+            val result = borutoApi.searchHeroes("khue").heroes
+
+            assertTrue { result.isEmpty() }
+            assertTrue { loadResult is LoadResult.Page }
         }
 }
