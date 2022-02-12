@@ -13,6 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
@@ -46,16 +48,22 @@ fun SearchWidget(
     onCloseClicked: () -> Unit
 ) {
 
-   Surface(
-       modifier = Modifier
-           .fillMaxWidth()
-           .height(TOP_APPBAR_HEIGHT),
-       elevation = AppBarDefaults.TopAppBarElevation,
-       color = MaterialTheme.colors.topAppBarBackgroundColor
-   ) {
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(TOP_APPBAR_HEIGHT)
+            .semantics {
+                contentDescription = "SearchWidget"
+            },
+        elevation = AppBarDefaults.TopAppBarElevation,
+        color = MaterialTheme.colors.topAppBarBackgroundColor
+    ) {
         TextField(
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .semantics {
+                    contentDescription = "TextField"
+                },
             value = text,
             onValueChange = { onTextChange(it) },
             placeholder = {
@@ -74,7 +82,7 @@ fun SearchWidget(
                 IconButton(
                     modifier = Modifier
                         .alpha(alpha = ContentAlpha.medium),
-                    onClick = {  }
+                    onClick = { }
                 ) {
                     Icon(
                         imageVector = Icons.Default.Search,
@@ -85,6 +93,9 @@ fun SearchWidget(
             },
             trailingIcon = {
                 IconButton(
+                    modifier = Modifier.semantics {
+                        contentDescription = "CloseButton"
+                    },
                     onClick = {
                         if (text.isNotEmpty()) {
                             onTextChange("")
@@ -113,7 +124,7 @@ fun SearchWidget(
                 cursorColor = MaterialTheme.colors.topAppBarContentColor
             )
         )
-   }
+    }
 }
 
 
