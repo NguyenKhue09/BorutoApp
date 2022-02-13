@@ -34,7 +34,7 @@ fun SplashScreen(
     val degrees = remember {
         Animatable(0f)
     }
-    
+
     LaunchedEffect(key1 = true) {
         degrees.animateTo(
             targetValue = 360f,
@@ -56,35 +56,25 @@ fun SplashScreen(
 
 @Composable
 fun Splash(degrees: Float) {
-    if(isSystemInDarkTheme()) {
-        Box(
-            modifier = Modifier
-                .background(
-                    Color.Black
-                )
-                .fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            Image(
-                modifier = Modifier.rotate(degrees = degrees),
-                painter = painterResource(id = R.drawable.ic_logo),
-                contentDescription = stringResource(R.string.app_logo)
-            )
-        }
-    } else {
-        Box(
-            modifier = Modifier
-                .background(
-                    Brush.verticalGradient(listOf(Purple700, Purple500))
-                )
-                .fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            Image(
-                modifier = Modifier.rotate(degrees = degrees),
-                painter = painterResource(id = R.drawable.ic_logo),
-                contentDescription = stringResource(R.string.app_logo)
-            )
-        }
+
+    val modifier = if (isSystemInDarkTheme()) Modifier
+        .background(
+            Color.Black
+        ) else Modifier
+        .background(
+            Brush.verticalGradient(listOf(Purple700, Purple500))
+        )
+
+    Box(
+        modifier = modifier
+            .fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Image(
+            modifier = Modifier.rotate(degrees = degrees),
+            painter = painterResource(id = R.drawable.ic_logo),
+            contentDescription = stringResource(R.string.app_logo)
+        )
     }
+
 }

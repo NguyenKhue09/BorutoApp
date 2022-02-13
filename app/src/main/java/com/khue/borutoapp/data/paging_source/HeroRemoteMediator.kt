@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @ExperimentalPagingApi
 // có thể bỏ inject ở đây
-class HeroRemoteMediator @Inject constructor(
+class HeroRemoteMediator(
     private val borutoApi: BorutoApi,
     private val borutoDatabase: BorutoDatabase
 ): RemoteMediator<Int, Hero>() {
