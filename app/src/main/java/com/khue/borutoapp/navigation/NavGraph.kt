@@ -42,6 +42,7 @@ fun SetUpNavigation(navController: NavHostController) {
                 type = NavType.IntType
             })
         ) {
+            println("Running")
             DetailsScreen(navController = navController)
         }
         composable(route = Screen.Search.route) {
